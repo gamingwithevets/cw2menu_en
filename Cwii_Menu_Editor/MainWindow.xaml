@@ -5,48 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cwii_Menu_Editor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="CWII Menu Editor (English)" Height="450" Width="800">
     <StackPanel>
-        <Button Content="打开Rom" HorizontalAlignment="Left" Click="Button_Click"/>
-        <Button Content="保存Rom" HorizontalAlignment="Left" Click="Button_Click_5"/>
-        <TextBlock Text="菜单图标基址:"/>
+        <Button Content="Open ROM" HorizontalAlignment="Left" Click="Button_Click"/>
+        <Button Content="Save ROM" HorizontalAlignment="Left" Click="Button_Click_5"/>
+        <TextBlock Text="Menu icon base address"/>
         <TextBox x:Name="MenuBase1Input" Text="5bba"/>
-        <TextBlock Text="菜单语言基址:"/>
+        <TextBlock Text="Menu text bitmap base address"/>
         <TextBox x:Name="MenuBase2Input" Text="5ed0"/>
-        <TextBlock Text="编辑索引:"/>
+        <TextBlock Text="Edit index"/>
         <TextBox x:Name="IndexInput" Text="0"/>
-        <TextBlock Text="语言:"/>
+        <TextBlock Text="Language code"/>
         <TextBox x:Name="LanguageInput" Text="1"/>
-        <Button Content="加载" HorizontalAlignment="Left" Click="Button_Click_1"/>
-        <TextBlock Text="预览"/>
+        <Button Content="Load" HorizontalAlignment="Left" Click="Button_Click_1"/>
+        <TextBlock Text="Preview"/>
         <Grid Width="256" HorizontalAlignment="Left">
             <Image x:Name="PreviewImage" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
         </Grid>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="位图_0偏移"/>
+            <TextBlock Text="Icon (low bit) offset "/>
             <TextBox Text="????" Width="100" x:Name="BitmapOffset0"/>
-            <Button Content="修改" Click="Button_Click_4"/>
+            <Button Content="Edit" Click="Button_Click_4"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="位图_1偏移"/>
+            <TextBlock Text="Icon (high bit) offset "/>
             <TextBox Text="????" Width="100" x:Name="BitmapOffset1"/>
-            <Button Content="修改" Click="Button_Click_3"/>
+            <Button Content="Edit" Click="Button_Click_3"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="文字位图偏移"/>
+            <TextBlock Text="Text bitmap offset "/>
             <TextBox Text="????" Width="100" x:Name="BitmapOffset2"/>
-            <Button Content="修改" Click="Button_Click_6"/>
+            <Button Content="Edit" Click="Button_Click_6"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="对应模式"/>
+            <TextBlock Text="Mode code "/>
             <TextBox Text="??" Width="100" x:Name="ModeInput"/>
-            <Button Content="修改" Click="Button_Click_2"/>
+            <Button Content="Edit" Click="Button_Click_2"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Button Content="导出(64*28)" HorizontalAlignment="Left" Click="Button_Click_8"/>
-            <Button Content="替换图标(64*15)" HorizontalAlignment="Left" Click="Button_Click_7"/>
-            <Button Content="替换标签(64*13)" HorizontalAlignment="Left" Click="Button_Click_9"/>
-            <Button Content="替换图标'n'标签(64*28)" HorizontalAlignment="Left" Click="Button_Click_10"/>
+            <Button Content="Export (64×28)" HorizontalAlignment="Left" Click="Button_Click_8"/>
+            <Button Content="Replace icon (64×15)" HorizontalAlignment="Left" Click="Button_Click_7"/>
+            <Button Content="Replace icon (64×13)" HorizontalAlignment="Left" Click="Button_Click_9"/>
+            <Button Content="Replace Icon 'n' label (64×29)" HorizontalAlignment="Left" Click="Button_Click_10"/>
         </StackPanel>
     </StackPanel>
 </Window>

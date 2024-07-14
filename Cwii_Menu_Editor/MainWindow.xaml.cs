@@ -167,11 +167,11 @@ namespace Cwii_Menu_Editor
                 encoder.Frames.Add(BitmapFrame.Create(bmp));
                 encoder.Save(s);
 
-                MessageBox.Show("成功保存");
+                MessageBox.Show("Image saved successfully!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"错误: \n{ex}");
+                MessageBox.Show($"ERROR: \n{ex}");
             }
         }
         private void Button_Click_7(object sender, RoutedEventArgs e)
@@ -185,7 +185,7 @@ namespace Cwii_Menu_Editor
             bi.EndInit();
             if (bi.PixelWidth < 64 || bi.PixelHeight < 16)
             {
-                MessageBox.Show("请选择64*16的图片.");
+                MessageBox.Show("Please select a 64×16 image");
                 return;
             }
             SetIcon(bi, new Int32Rect(0, 0, 64, 16));
@@ -249,7 +249,7 @@ namespace Cwii_Menu_Editor
         {
             if (PreviewImage.Source == null)
             {
-                MessageBox.Show("请先加载.");
+                MessageBox.Show("Please load first!");
                 return;
             }
             SaveFileDialog sfd = new();
@@ -270,7 +270,7 @@ namespace Cwii_Menu_Editor
             bi.EndInit();
             if (bi.PixelWidth < 64 || bi.PixelHeight < 13)
             {
-                MessageBox.Show("请选择64*13的图片.");
+                MessageBox.Show("Please select a 64×13 image");
                 return;
             }
             SetLabel(bi, new Int32Rect(0, 0, 64, 13));
@@ -288,7 +288,7 @@ namespace Cwii_Menu_Editor
             bi.EndInit();
             if (bi.PixelWidth < 64 || bi.PixelHeight < 29)
             {
-                MessageBox.Show("请选择64*29的图片.");
+                MessageBox.Show("Please select a 64×29 image");
                 return;
             }
             SetIcon(bi, new Int32Rect(0, 0, 64, 16));

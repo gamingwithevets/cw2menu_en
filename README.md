@@ -1,0 +1,1 @@
+Cwii_Menu_Editor translated to English.
