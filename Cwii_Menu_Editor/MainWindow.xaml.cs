@@ -62,18 +62,18 @@ namespace Cwii_Menu_Editor
         }
         private ImageSource ComposeImage()
         {
-            WriteableBitmap b = new(64, 28, 96, 96, PixelFormats.Bgr32, null);
+            WriteableBitmap b = new(64, 29, 96, 96, PixelFormats.Bgr32, null);
             b.Lock();
             byte* buf = (byte*)b.BackBuffer;
             // render icon
             {
                 nint rb1 = *(int*)(rom + mb1 + index * 8) & 0xffffff;
                 nint rb2 = *(int*)(rom + mb1 + index * 8 + 4) & 0xffffff;
-                var array1 = BytesToBitSet(rom + rb1, 2 * 64);
-                var array2 = BytesToBitSet(rom + rb2, 2 * 64);
+                var array1 = BytesToBitSet(rom + rb1, 17 * 8);
+                var array2 = BytesToBitSet(rom + rb2, 17 * 8);
                 byte[] fin = array1.Zip(array2, (a, b) => (byte)((b ? 2 : 0) + (a ? 1 : 0))).ToArray();
                 int d = 0;
-                for (int j = 0; j < 16; j++)
+                for (int j = 0; j <= 16; j++)
                 {
                     for (int i = 0; i < 64; i++)
                     {
@@ -89,7 +89,7 @@ namespace Cwii_Menu_Editor
                 nint rb1 = *(int*)(rom + mb2 + index * 4 + language * 0x3c) & 0xffffff;
                 var array1 = BytesToBitSet(rom + rb1, 2 * 64);
                 int d = 0;
-                for (int j = 15; j < 28; j++)
+                for (int j = 16; j < 29; j++)
                 {
                     for (int i = 0; i < 64; i++)
                     {
@@ -100,7 +100,7 @@ namespace Cwii_Menu_Editor
                 }
 
             }
-            b.AddDirtyRect(new Int32Rect(0, 0, 64, 28));
+            b.AddDirtyRect(new Int32Rect(0, 0, 64, 29));
             b.Unlock();
             return b;
         }
@@ -183,18 +183,19 @@ namespace Cwii_Menu_Editor
             bi.BeginInit();
             bi.StreamSource = stm;
             bi.EndInit();
-            if (bi.PixelWidth < 64 || bi.PixelHeight < 15)
+            if (bi.PixelWidth < 64 || bi.PixelHeight < 16)
             {
-                MessageBox.Show("请选择64*15的图片.");
+                MessageBox.Show("请选择64*16的图片.");
                 return;
             }
-            SetIcon(bi, new Int32Rect(0, 0, 64, 15));
+            SetIcon(bi, new Int32Rect(0, 0, 64, 16));
+            stm.Close();
         }
 
         private void SetIcon(BitmapImage bi, Int32Rect range)
         {
-            byte* data = stackalloc byte[64 * 15 * 4];
-            bi.CopyPixels(range, (nint)data, 64 * 15 * 4, 64 * 4);
+            byte* data = stackalloc byte[64 * 16 * 4];
+            bi.CopyPixels(range, (nint)data, 64 * 16 * 4, 64 * 4);
             nint rb1 = *(int*)(rom + mb1 + index * 8) & 0xffffff;
             nint rb2 = *(int*)(rom + mb1 + index * 8 + 4) & 0xffffff;
 
@@ -222,12 +223,12 @@ namespace Cwii_Menu_Editor
         }
         private void SetLabel(BitmapImage bi, Int32Rect range)
         {
-            byte* data = stackalloc byte[64 * 15 * 4];
-            bi.CopyPixels(range, (nint)data, 64 * 15 * 4, 64 * 4);
+            byte* data = stackalloc byte[64 * 16 * 4];
+            bi.CopyPixels(range, (nint)data, 64 * 16 * 4, 64 * 4);
             nint rb1 = *(int*)(rom + mb2 + index * 4 + language * 0x3c) & 0xffffff;
 
             byte* array1 = rom + rb1;
-            for (int i = 0; i < 13*8; i++)
+            for (int i = 0; i < 13 * 8; i++)
             {
                 array1[i] = 0;
             }
@@ -273,6 +274,7 @@ namespace Cwii_Menu_Editor
                 return;
             }
             SetLabel(bi, new Int32Rect(0, 0, 64, 13));
+            stm.Close();
         }
 
         private void Button_Click_10(object sender, RoutedEventArgs e)
@@ -284,13 +286,14 @@ namespace Cwii_Menu_Editor
             bi.BeginInit();
             bi.StreamSource = stm;
             bi.EndInit();
-            if (bi.PixelWidth < 64 || bi.PixelHeight < 28)
+            if (bi.PixelWidth < 64 || bi.PixelHeight < 29)
             {
-                MessageBox.Show("请选择64*15的图片.");
+                MessageBox.Show("请选择64*29的图片.");
                 return;
             }
-            SetIcon(bi, new Int32Rect(0, 0, 64, 15));
-            SetLabel(bi, new Int32Rect(0, 15, 64, 13));
+            SetIcon(bi, new Int32Rect(0, 0, 64, 16));
+            SetLabel(bi, new Int32Rect(0, 16, 64, 13));
+            stm.Close();
         }
     }
 }
