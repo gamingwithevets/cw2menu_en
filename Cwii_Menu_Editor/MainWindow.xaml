@@ -9,10 +9,30 @@
     <StackPanel>
         <Button Content="Open ROM" HorizontalAlignment="Left" Click="Button_Click"/>
         <Button Content="Save ROM" HorizontalAlignment="Left" Click="Button_Click_5"/>
+        <StackPanel Orientation="Horizontal">
+            <!--<ComboBox Width="200">
+                <ComboBoxItem>
+                    C1 C4
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    C1 03
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    C1 03 0C
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    C1 03 88
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    C1 03 0D
+                </ComboBoxItem>
+            </ComboBox>-->
+            <Button Content="Auto search" HorizontalAlignment="Left" Click="Button_Click_11"/>
+        </StackPanel>
         <TextBlock Text="Menu icon base address"/>
-        <TextBox x:Name="MenuBase1Input" Text="5bba"/>
+        <TextBox x:Name="MenuBase1Input" Text="????"/>
         <TextBlock Text="Menu text bitmap base address"/>
-        <TextBox x:Name="MenuBase2Input" Text="5ed0"/>
+        <TextBox x:Name="MenuBase2Input" Text="????"/>
         <TextBlock Text="Edit index"/>
         <TextBox x:Name="IndexInput" Text="0"/>
         <TextBlock Text="Language code"/>

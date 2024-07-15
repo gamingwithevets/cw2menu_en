@@ -24,6 +24,139 @@ namespace Cwii_Menu_Editor
             InitializeComponent();
 
         }
+        public static IntPtr FindSignature(byte* start, nint size, string signature)
+        {
+            byte* pattern = (byte*)Marshal.StringToHGlobalAnsi(signature).ToPointer();
+            byte* oldPat = pattern;
+            byte* end = start + size;
+            IntPtr firstMatch = IntPtr.Zero;
+
+            byte patByte = GetByte(pattern);
+
+            for (byte* pCur = start; pCur < end; pCur++)
+            {
+                if (*pattern == 0)
+                    return firstMatch;
+
+                while (*pattern == ' ')
+                    pattern++;
+
+                if (*pattern == 0)
+                    return firstMatch;
+
+                if (oldPat != pattern)
+                {
+                    oldPat = pattern;
+                    if (*pattern != '?')
+                        patByte = GetByte(pattern);
+                }
+
+                if (*pattern == '?' || *pCur == patByte)
+                {
+                    if (firstMatch == IntPtr.Zero)
+                        firstMatch = (IntPtr)pCur;
+
+                    if (pattern[1] == 0 || pattern[2] == 0)
+                        return firstMatch;
+
+                    pattern += 2;
+                }
+                else
+                {
+                    pattern = (byte*)Marshal.StringToHGlobalAnsi(signature).ToPointer();
+                    firstMatch = IntPtr.Zero;
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+        public static List<IntPtr> FindAllSignatures(byte* start, nint size, string signature)
+        {
+            List<IntPtr> matches = new();
+            byte* sig = null;
+            try
+            {
+                sig = (byte*)Marshal.StringToHGlobalAnsi(signature).ToPointer();
+                byte* pattern = sig;
+                byte* oldPat = pattern;
+                byte* end = start + size;
+
+                byte patByte = GetByte(pattern);
+
+                for (byte* pCur = start; pCur < end; pCur++)
+                {
+                    if (*pattern == 0)
+                    {
+                        matches.Add((IntPtr)pCur);
+                        pattern = sig;
+                        oldPat = pattern;
+                        patByte = GetByte(pattern);
+                        continue;
+                    }
+
+                    while (*pattern == ' ')
+                        pattern++;
+
+                    if (*pattern == 0)
+                    {
+                        matches.Add((IntPtr)pCur);
+                        pattern = sig;
+                        oldPat = pattern;
+                        patByte = GetByte(pattern);
+                        continue;
+                    }
+
+                    if (oldPat != pattern)
+                    {
+                        oldPat = pattern;
+                        if (*pattern != '?')
+                            patByte = GetByte(pattern);
+                    }
+
+                    if (*pattern == '?' || *pCur == patByte)
+                    {
+                        if (pattern[1] == 0 || pattern[2] == 0)
+                        {
+                            matches.Add((IntPtr)pCur);
+                            pattern = sig;
+                            oldPat = pattern;
+                            patByte = GetByte(pattern);
+                            continue;
+                        }
+
+                        pattern += 2;
+                    }
+                    else
+                    {
+                        pattern = sig;
+                        oldPat = pattern;
+                        patByte = GetByte(pattern);
+                    }
+                }
+
+                Marshal.FreeHGlobal((IntPtr)pattern);
+                return matches;
+            }
+            finally
+            {
+                if (sig != null)
+                {
+                    Marshal.FreeHGlobal((nint)sig);
+                }
+            }
+        }
+
+
+        private static byte GetByte(byte* pattern)
+        {
+            if (*pattern == '?')
+                return 0;
+
+            byte high = (byte)(pattern[0] >= '0' && pattern[0] <= '9' ? pattern[0] - '0' : pattern[0] - 'A' + 10);
+            byte low = (byte)(pattern[1] >= '0' && pattern[1] <= '9' ? pattern[1] - '0' : pattern[1] - 'A' + 10);
+
+            return (byte)((high << 4) | low);
+        }
         private byte* rom;
         private nint mb1;
         private nint mb2;
@@ -294,6 +427,18 @@ namespace Cwii_Menu_Editor
             SetIcon(bi, new Int32Rect(0, 0, 64, 16));
             SetLabel(bi, new Int32Rect(0, 16, 64, 13));
             stm.Close();
+        }
+
+        private void Button_Click_11(object sender, RoutedEventArgs e)
+        {
+            var sig1 = FindSignature(rom, 0xffff, "00 ?? ?? ?? C1 ?? ?? ?? 00 ?? ?? ?? 03") - 3;
+            var firstmatch = Convert.ToString(sig1 - (nint)rom, 16).PadLeft(4, '0').ToUpper();
+            MenuBase1Input.Text = firstmatch;
+            var sig2 = FindSignature(rom, 0xffff, $"f8 b2 08 a2 {firstmatch[2..4]} {firstmatch[0..2]} 08 90") - (nint)rom;
+            var v2 = *(ushort*)&rom[sig2 + 0xa4];
+            var match2 = Convert.ToString(v2, 16).PadLeft(4, '0').ToUpper();
+            MenuBase2Input.Text = match2;
+            //MessageBox.Show(string.Join(' ',sigs.Select(x => Convert.ToString(x - (nint)rom,16))));
         }
     }
 }
