@@ -9,10 +9,30 @@
     <StackPanel>
         <Button Content="打开Rom" HorizontalAlignment="Left" Click="Button_Click"/>
         <Button Content="保存Rom" HorizontalAlignment="Left" Click="Button_Click_5"/>
+        <StackPanel Orientation="Horizontal">
+            <!--<ComboBox Width="200">
+                <ComboBoxItem>
+                    C1 C4
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    C1 03
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    C1 03 0C
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    C1 03 88
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    C1 03 0D
+                </ComboBoxItem>
+            </ComboBox>-->
+            <Button Content="自动搜索" HorizontalAlignment="Left" Click="Button_Click_11"/>
+        </StackPanel>
         <TextBlock Text="菜单图标基址:"/>
-        <TextBox x:Name="MenuBase1Input" Text="5bba"/>
+        <TextBox x:Name="MenuBase1Input" Text="????"/>
         <TextBlock Text="菜单语言基址:"/>
-        <TextBox x:Name="MenuBase2Input" Text="5ed0"/>
+        <TextBox x:Name="MenuBase2Input" Text="????"/>
         <TextBlock Text="编辑索引:"/>
         <TextBox x:Name="IndexInput" Text="0"/>
         <TextBlock Text="语言:"/>
